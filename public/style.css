@@ -5,3 +5,16 @@
     width: 100%; /* Full width */
     z-index:1; /*z-index ensures images go under the navbar upon scrolling */
 }
+
+.underNav {
+    margin-top: 65px; /* Add a top margin to avoid content overlay */
+}
+
+.well {
+	margin: 0 30px 0 85px;
+}
+
+.alert {
+	padding-top: 20px;
+}
+

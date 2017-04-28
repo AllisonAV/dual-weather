@@ -4,9 +4,9 @@ import { getCurrTemp } from '../reducers/weather'
 
 // map State To Props takes what is already on State
 const mapStateToProps = (state) => {
+  console.log('IN WEATHER CONTAINER', state)
   return {
-    currTemp1: state.currTemp1,
-    location1: state.location1
+    currData: state.weather.currData
   }
 }
 

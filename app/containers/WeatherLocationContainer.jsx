@@ -1,11 +1,14 @@
 import { connect } from 'react-redux'
 import WeatherLocation from 'APP/app/components/WeatherLocation'
 import { getCurrTemp } from '../reducers/weather'
+import store from '../store'
 
 // map State To Props takes what is already on State
 const mapStateToProps = (state) => {
+  console.log('MAP STATE TO PROPS', state.weather.currData)
   return {
-    currTemp: state.weather.currTemp,
+    currData: state.weather.currData,
+    celsius: false
   }
 }
 // Whatever function I put here, to update the state, I need to

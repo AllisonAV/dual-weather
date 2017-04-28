@@ -7,6 +7,7 @@ import {connect, Provider} from 'react-redux'
 import store from './store'
 import { fetchCurrTemp } from './reducers/weather'
 
+import AppContainer from './containers/AppContainer'
 import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
@@ -28,17 +29,16 @@ const ExampleApp = connect(
 
 const onWeatherLocationEnter = (nextRouterState) => {
   store.getState()
-  console.log('in main', store.getState())
 }
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/jokes" />
+      <Route path="/" component={AppContainer}>
+        <IndexRedirect to="/weather" />
         <Route path="/jokes" component={Jokes} />
         <Route path="/weather" component={WeatherContainer} />
-        <Route path="/weather/:location"
+        <Route path="/weather/:location1/:location2"
                 component={WeatherLocationContainer}
                 onEnter={onWeatherLocationEnter} />
       </Route>
