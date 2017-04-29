@@ -20,3 +20,4 @@ const mapDispatchToProps = { getCurrTemp }
 // which changes the state
 
 export default connect(mapStateToProps, mapDispatchToProps)(Weather)
+

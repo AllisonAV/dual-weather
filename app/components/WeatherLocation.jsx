@@ -1,90 +1,107 @@
-import React from 'react'
-import store from '../store'
+import React, { Component } from 'react'
 
-  /* global dispatch */
-// const WeatherLocation = ({currTemp1, location1}) => {
-const WeatherLocation = (props) => {
-  console.log('PROPS IN WEATHER LOCATION', props)
-  const loc1 = props.currData.location1
-  const loc2 = props.currData.location2
-  const temp1 = props.currData.currTemp1
-  const temp2 = props.currData.currTemp2
-  const windMph1 = props.currData.windMph1
-  const windMph2 = props.currData.windMph2
-  const weather1 = props.currData.weather1
-  const weather2 = props.currData.weather2
-  const tempC1 = props.currData.currTempC1
-  const tempC2 = props.currData.currTempC2
-  let celsius = props.celsius
+export default class WeatherLocation extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      celsius: false
+    }
 
-  function changeUnits() {
-    celsius=!celsius
-    store.getState()
+    this.changeUnits = this.changeUnits.bind(this)
   }
 
-  return (
-    <div>
-      <div className="row">
-        <div className="well col-lg-5">
-          <table className="table table-striped table-hover ">
-          <thead>
-            <tr className="info">
-              <th>{ loc1 }</th>
-              <th> </th>
-            </tr>
-          </thead>
-            <tbody>
-              <tr>
-                <td>Weather Conditions</td>
-                <td>{ weather1 }</td>
-              </tr>
-              { celsius
-                ? <tr>
-                    <td>Temperature</td>
-                    <td>{ tempC1 }&#8451;</td>
-                  </tr>
-                : <tr>
-                    <td>Temperature</td>
-                    <td>{ temp1 }&#8457;</td>
-                  </tr> }
-                <tr>
-                  <td>Wind</td>
-                  <td>{ windMph2}</td>
-              </tr>
-            </tbody>
-        </table>
-        </div>
-        <div className="well col-lg-5">
-          <table className="table table-striped table-hover ">
-          <thead>
-            <tr className="info">
-              <th>{ loc2 }</th>
-              <th> </th>
-            </tr>
-          </thead>
-            <tbody>
-              <tr>
-                <td>Weather Conditions</td>
-                <td>{ weather2 }</td>
-              </tr>
-              <tr>
-                <td>Temperature</td>
-                <td>{ temp2 }&#8457;</td>
-              </tr>
-              <tr>
-                <td>Wind</td>
-                <td>{ windMph2}</td>
-              </tr>
-            </tbody>
-        </table>
-        < /div>
-      </div>
-      <br />
-      <button className="btn btn-primary"
-              onClick={changeUnits} > Celsius
-      </button>
-    </div>
-  )
-}
+  changeUnits = function() {
+    this.setState({celsius: !this.state.celsius})
+  }
 
-export default WeatherLocation
+  render() {
+    return (
+      <div>
+        <div className="row">
+          <div className="well col-lg-5">
+            <table className="table table-striped table-hover ">
+            <thead>
+              <tr className="info">
+                <th>{ this.props.currData.location1 }</th>
+                <th> </th>
+              </tr>
+            </thead>
+              <tbody>
+                <tr>
+                  <td>Weather Conditions</td>
+                  <td>
+                    <img src={this.props.currData.icon1}/>
+                    { this.props.currData.weather1 }
+                  </td>
+                </tr>
+                { this.state.celsius
+                  ? <tr>
+                      <td>Temperature</td>
+                      <td>{ this.props.currData.currTempC1 }&#8451;</td>
+                    </tr>
+                  : <tr>
+                      <td>Temperature</td>
+                      <td>{ this.props.currData.currTemp1 }&#8457;</td>
+                    </tr> }
+                { this.state.celsius
+                  ? <tr>
+                      <td>Wind from the {this.props.currData.windDir1}</td>
+                      <td>{ this.props.currData.windKph1} KPH</td>
+                    </tr>
+                  : <tr>
+                      <td>Wind from the {this.props.currData.windDir1}</td>
+                      <td>{ this.props.currData.windMph1} MPH</td>
+                    </tr> }
+              </tbody>
+          </table>
+          </div>
+          <div className="well col-lg-5">
+            <table className="table table-striped table-hover ">
+            <thead>
+              <tr className="info">
+                <th>{ this.props.currData.location2 }</th>
+                <th> </th>
+              </tr>
+            </thead>
+              <tbody>
+                <tr>
+                  <td>Weather Conditions</td>
+                  <td>
+                    <img src={this.props.currData.icon2}/>
+                    { this.props.currData.weather2 }
+                  </td>
+                </tr>
+                { this.state.celsius
+                  ? <tr>
+                      <td>Temperature</td>
+                      <td>{ this.props.currData.currTempC2 }&#8451;</td>
+                    </tr>
+                  : <tr>
+                      <td>Temperature</td>
+                      <td>{ this.props.currData.currTemp2 }&#8457;</td>
+                    </tr> }
+                { this.state.celsius
+                  ? <tr>
+                      <td>Wind from the {this.props.currData.windDir1}</td>
+                      <td>{ this.props.currData.windKph2} KPH</td>
+                    </tr>
+                  : <tr>
+                      <td>Wind from the {this.props.currData.windDir2}</td>
+                      <td>{ this.props.currData.windMph2} MPH</td>
+                    </tr> }
+              </tbody>
+          </table>
+          < /div>
+        </div>
+        <br />
+        { this.state.celsius
+          ? <button className="btn btn-primary"
+                onClick={this.changeUnits} > Fahrenheit
+            </button>
+          : <button className="btn btn-primary"
+                onClick={this.changeUnits} > Celsius
+        </button> }
+      </div>
+    )
+  }
+}

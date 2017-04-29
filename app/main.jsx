@@ -8,6 +8,8 @@ import store from './store'
 import { fetchCurrTemp } from './reducers/weather'
 
 import AppContainer from './containers/AppContainer'
+//import MapContainer from './containers/MapContainer'
+
 import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'

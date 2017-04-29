@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
 
+import Map from 'google-maps-react'
+
 export default class Weather extends Component {
   constructor(props) {
     super(props)

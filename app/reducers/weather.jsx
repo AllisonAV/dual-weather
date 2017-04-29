@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Promise from 'bluebird'
+import { keyWU } from '../../envKeys'
 
 const initialState = {
   currData: {}
@@ -9,11 +10,11 @@ const initialState = {
 const GOT_CURRTEMP = 'GOT_CURRTEMP'
 
 // ------------ Weather Dispatchers -----------
-export const getCurrTemp = (param1, param2) =>
+export const getCurrTemp = (param1, param2) => 
   dispatch =>
     Promise.all([
-      axios.get(`http://api.wunderground.com/api/3c8d822da4cbaeda/conditions/q/${param1}.json`),
-      axios.get(`http://api.wunderground.com/api/3c8d822da4cbaeda/conditions/q/${param2}.json`)
+      axios.get(`http://api.wunderground.com/api/${keyWU}/conditions/q/${param1}.json`),
+      axios.get(`http://api.wunderground.com/api/${keyWU}/conditions/q/${param2}.json`)
     ])
     .spread((weatherData1, weatherData2) => {
       const currData = {
@@ -28,7 +29,11 @@ export const getCurrTemp = (param1, param2) =>
         location1: weatherData1.data.current_observation.display_location.full,
         location2: weatherData2.data.current_observation.display_location.full,
         weather1: weatherData1.data.current_observation.weather,
-        weather2: weatherData2.data.current_observation.weather
+        weather2: weatherData2.data.current_observation.weather,
+        windDir1: weatherData2.data.current_observation.wind_dir,
+        windDir2: weatherData2.data.current_observation.wind_dir,
+        icon1: weatherData2.data.current_observation.icon_url,
+        icon2: weatherData2.data.current_observation.icon_url
       }
       console.log('DISPATCHER', currData.currTemp1, currData.currTemp2, currData.location1, currData.location2)
       return dispatch(gotCurrTemp(currData))
