@@ -6,7 +6,7 @@ export default class WeatherLocation extends Component {
     this.state = {
       celsius: false
     }
-
+    console.log('PROPS', this.props.currData)
     this.changeUnits = this.changeUnits.bind(this)
   }
 
@@ -18,7 +18,16 @@ export default class WeatherLocation extends Component {
     return (
       <div>
         <div className="row">
-          <div className="well col-lg-5">
+          <div className="col-lg-1">
+                  { this.state.celsius
+          ? <button className="btn btn-primary"
+                onClick={this.changeUnits} > Fahrenheit
+            </button>
+          : <button className="btn btn-primary"
+                onClick={this.changeUnits} > Celsius
+        </button> }
+        </div>
+          <div className="well col-lg-4">
             <table className="table table-striped table-hover ">
             <thead>
               <tr className="info">
@@ -51,11 +60,34 @@ export default class WeatherLocation extends Component {
                   : <tr>
                       <td>Wind from the {this.props.currData.windDir1}</td>
                       <td>{ this.props.currData.windMph1} MPH</td>
-                    </tr> }
+                    </tr>
+                  }
+                  <tr className="info">
+                    <td>Next 8 hours</td>
+                    <td></td>
+                  </tr>
+                    {this.props.currData.hourly1.map((hour, index) =>
+                      <tr key={index}>
+                      { index<8
+                        ? <div>
+                            <td>{hour.FCTTIME.civil}</td>
+                            {this.state.celsius
+                           ? <td>
+                                <img src={hour.icon_url}/>{hour.temp.metric}&#8451;;
+                              </td>
+                            : <td>
+                                <img src={hour.icon_url}/>{hour.temp.english}&#8457;
+                              </td> }
+                          </div>
+                        : <div></div>
+                      }
+                      </tr>
+                      )
+                    }
               </tbody>
           </table>
           </div>
-          <div className="well col-lg-5">
+          <div className="well col-lg-4">
             <table className="table table-striped table-hover ">
             <thead>
               <tr className="info">
@@ -89,18 +121,33 @@ export default class WeatherLocation extends Component {
                       <td>Wind from the {this.props.currData.windDir2}</td>
                       <td>{ this.props.currData.windMph2} MPH</td>
                     </tr> }
+                                      <tr className="info">
+                    <td>Next 8 hours</td>
+                    <td></td>
+                  </tr>
+                    {this.props.currData.hourly2.map((hour, index) =>
+                      <tr key={index}>
+                      { index<8
+                        ? <div>
+                            <td>{hour.FCTTIME.civil}</td>
+                            {this.state.celsius
+                           ? <td>
+                                <img src={hour.icon_url}/>{hour.temp.metric}&#8451;
+                              </td>
+                            : <td>
+                                <img src={hour.icon_url}/>{hour.temp.english}&#8457;
+                              </td> }
+                          </div>
+                        : <div></div>
+                      }
+                      </tr>
+                      )
+                    }
+
               </tbody>
           </table>
           < /div>
         </div>
-        <br />
-        { this.state.celsius
-          ? <button className="btn btn-primary"
-                onClick={this.changeUnits} > Fahrenheit
-            </button>
-          : <button className="btn btn-primary"
-                onClick={this.changeUnits} > Celsius
-        </button> }
       </div>
     )
   }

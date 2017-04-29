@@ -5,10 +5,9 @@ import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
 import store from './store'
-import { fetchCurrTemp } from './reducers/weather'
 
 import AppContainer from './containers/AppContainer'
-//import MapContainer from './containers/MapContainer'
+import { Container } from './containers/Container'
 
 import Jokes from './components/Jokes'
 import Login from './components/Login'
@@ -43,6 +42,7 @@ render(
         <Route path="/weather/:location1/:location2"
                 component={WeatherLocationContainer}
                 onEnter={onWeatherLocationEnter} />
+        <Route path="/map" component={Container} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
 
-import Map from 'google-maps-react'
-
 export default class Weather extends Component {
   constructor(props) {
     super(props)
@@ -15,7 +13,8 @@ export default class Weather extends Component {
         state1: '',
         state2: ''
       },
-      error: false
+      error: false,
+      errorCityState: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleGetWeather = this.handleGetWeather.bind(this)
@@ -30,6 +29,7 @@ export default class Weather extends Component {
   handleGetWeather = function(e) {
     e.preventDefault()
     let validData = true
+    let validCityState=true
     let param1, param2
 
         // check if zip or city & state is entered
@@ -38,6 +38,8 @@ export default class Weather extends Component {
     } else if (this.state.locations.city1 && this.state.locations.state1) {
       this.removeSpacesFromCity(this.state.locations.state1)
       param1 = `${this.state.locations.city1}_${this.state.locations.state1}`
+    } else if (this.state.locations.city1 && !this.state.locations.state1) {
+      validCityState = false
     } else validData = false
 
     if (this.state.locations.zip2) {
@@ -45,14 +47,21 @@ export default class Weather extends Component {
     } else if (this.state.locations.city2 && this.state.locations.state2) {
       this.removeSpacesFromCity(this.state.locations.state1)
       param2 = `${this.state.locations.city2}_${this.state.locations.state2}`
+    } else if (this.state.locations.city2 && !this.state.locations.state2) {
+      validCityState = false
     } else validData = false
 
-    if (validData) {
+    if (validData && validCityState) {
       this.setState({error: false})
+      this.setState({errorCityState: false})
       this.props.getCurrTemp(param1, param2)
       .then(() => browserHistory.push(`/weather/${param1}/${param2}`))
-    } else {
+    } else if (!validData) {
       this.setState({error: true})
+      this.setState({errorCityState: false})
+    } else {
+      this.setState({error: false})
+      this.setState({errorCityState: true})
     }
   }
 
@@ -237,7 +246,11 @@ export default class Weather extends Component {
               ? <div className="alert alert-dismissible alert-danger col-lg-2">
                   <strong> Enter Valid Data! </strong>
                 </div>
-              : <div />
+              : this.state.errorCityState
+                ? <div className="alert alert-dismissible alert-danger col-lg-3">
+                  <strong> Enter Both City & State! </strong>
+                </div>
+                : <div />
             }
           </fieldset>
         </form>

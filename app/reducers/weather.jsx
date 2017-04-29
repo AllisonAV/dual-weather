@@ -10,13 +10,32 @@ const initialState = {
 const GOT_CURRTEMP = 'GOT_CURRTEMP'
 
 // ------------ Weather Dispatchers -----------
-export const getCurrTemp = (param1, param2) => 
+export const getCurrTemp = (param1, param2) =>
   dispatch =>
     Promise.all([
       axios.get(`http://api.wunderground.com/api/${keyWU}/conditions/q/${param1}.json`),
-      axios.get(`http://api.wunderground.com/api/${keyWU}/conditions/q/${param2}.json`)
+      axios.get(`http://api.wunderground.com/api/${keyWU}/conditions/q/${param2}.json`),
+      axios.get(`http://api.wunderground.com/api/${keyWU}/hourly/q/${param1}.json`),
+      axios.get(`http://api.wunderground.com/api/${keyWU}/hourly/q/${param2}.json`)
     ])
-    .spread((weatherData1, weatherData2) => {
+    .spread((weatherData1, weatherData2, hourly1, hourly2) => {
+      // const currData1 = [
+      //   ['tempF', weatherData1.data.current_observation.temp_f],
+      //   ['tempC', weatherData1.data.current_observation.temp_c],
+      //   ['windMph', weatherData1.data.current_observation.wind_mph],
+      //   ['location', weatherData1.data.current_observation.display_location.full],
+      //   ['weather', weatherData1.data.current_observation.weather],
+      //   ['windDir', weatherData1.data.current_observation.wind_dir],
+      //   ['iconUrl', weatherData1.data.current_observation.icon_url] ]
+      // const currData2 = [
+      //   ['tempF', weatherData2.data.current_observation.temp_f],
+      //   ['tempC', weatherData2.data.current_observation.temp_c],
+      //   ['windMph', weatherData2.data.current_observation.wind_mph],
+      //   ['location', weatherData2.data.current_observation.display_location.full],
+      //   ['weather', weatherData2.data.current_observation.weather],
+      //   ['windDir', weatherData2.data.current_observation.wind_dir],
+      //   ['iconUrl', weatherData2.data.current_observation.icon_url] ]
+      // const currData = [currData1, currData2]
       const currData = {
         currTemp1: weatherData1.data.current_observation.temp_f,
         currTemp2: weatherData2.data.current_observation.temp_f,
@@ -33,9 +52,11 @@ export const getCurrTemp = (param1, param2) =>
         windDir1: weatherData2.data.current_observation.wind_dir,
         windDir2: weatherData2.data.current_observation.wind_dir,
         icon1: weatherData2.data.current_observation.icon_url,
-        icon2: weatherData2.data.current_observation.icon_url
+        icon2: weatherData2.data.current_observation.icon_url,
+        hourly1: hourly1.data.hourly_forecast,
+        hourly2: hourly2.data.hourly_forecast
       }
-      console.log('DISPATCHER', currData.currTemp1, currData.currTemp2, currData.location1, currData.location2)
+      console.log('DISPATCHER', hourly1)
       return dispatch(gotCurrTemp(currData))
     })
     .catch(err => console.error(err))
