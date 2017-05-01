@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { browserHistory } from 'react-router'
 
 export default class WeatherLocation extends Component {
   constructor(props) {
@@ -6,7 +7,11 @@ export default class WeatherLocation extends Component {
     this.state = {
       celsius: false
     }
-    console.log('PROPS', this.props.currData)
+    console.log('PROPS IN WEATHER LOCATION', this.props)
+    if (this.props.currData.error) {
+      console.log('IN REDIRECT')
+      browserHistory.push(`/weather/`)
+    }
     this.changeUnits = this.changeUnits.bind(this)
   }
 
@@ -73,7 +78,7 @@ export default class WeatherLocation extends Component {
                             <td>{hour.FCTTIME.civil}</td>
                             {this.state.celsius
                            ? <td>
-                                <img src={hour.icon_url}/>{hour.temp.metric}&#8451;;
+                                <img src={hour.icon_url}/>{hour.temp.metric}&#8451;
                               </td>
                             : <td>
                                 <img src={hour.icon_url}/>{hour.temp.english}&#8457;

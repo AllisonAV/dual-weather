@@ -4,7 +4,6 @@ import { getCurrTemp } from '../reducers/weather'
 
 // map State To Props takes what is already on State
 const mapStateToProps = (state) => {
-  console.log('IN WEATHER CONTAINER', state)
   return {
     currData: state.weather.currData
   }
@@ -20,4 +19,3 @@ const mapDispatchToProps = { getCurrTemp }
 // which changes the state
 
 export default connect(mapStateToProps, mapDispatchToProps)(Weather)
-

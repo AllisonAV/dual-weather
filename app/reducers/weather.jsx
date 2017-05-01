@@ -36,27 +36,38 @@ export const getCurrTemp = (param1, param2) =>
       //   ['windDir', weatherData2.data.current_observation.wind_dir],
       //   ['iconUrl', weatherData2.data.current_observation.icon_url] ]
       // const currData = [currData1, currData2]
-      const currData = {
-        currTemp1: weatherData1.data.current_observation.temp_f,
-        currTemp2: weatherData2.data.current_observation.temp_f,
-        currTempC1: weatherData1.data.current_observation.temp_c,
-        currTempC2: weatherData2.data.current_observation.temp_c,
-        windMph1: weatherData1.data.current_observation.wind_mph,
-        windMph2: weatherData2.data.current_observation.wind_mph,
-        windKph1: weatherData1.data.current_observation.wind_mph,
-        windKph2: weatherData2.data.current_observation.wind_mph,
-        location1: weatherData1.data.current_observation.display_location.full,
-        location2: weatherData2.data.current_observation.display_location.full,
-        weather1: weatherData1.data.current_observation.weather,
-        weather2: weatherData2.data.current_observation.weather,
-        windDir1: weatherData2.data.current_observation.wind_dir,
-        windDir2: weatherData2.data.current_observation.wind_dir,
-        icon1: weatherData2.data.current_observation.icon_url,
-        icon2: weatherData2.data.current_observation.icon_url,
-        hourly1: hourly1.data.hourly_forecast,
-        hourly2: hourly2.data.hourly_forecast
+      let currData = {}
+      console.log('BEFORE ERROR IN REDUCER', weatherData1.data.response.error,
+        hourly1.data.response.error,
+        weatherData2.data.response.error,
+        hourly2.data.response.error)
+      if (weatherData1.data.response.error ||
+        weatherData2.data.response.error ||
+        hourly1.data.response.error ||
+        hourly2.error) {
+        currData = {error: 'Invalid Location'}
+      } else {
+        currData = {
+          currTemp1: weatherData1.data.current_observation.temp_f,
+          currTemp2: weatherData2.data.current_observation.temp_f,
+          currTempC1: weatherData1.data.current_observation.temp_c,
+          currTempC2: weatherData2.data.current_observation.temp_c,
+          windMph1: weatherData1.data.current_observation.wind_mph,
+          windMph2: weatherData2.data.current_observation.wind_mph,
+          windKph1: weatherData1.data.current_observation.wind_mph,
+          windKph2: weatherData2.data.current_observation.wind_mph,
+          location1: weatherData1.data.current_observation.display_location.full,
+          location2: weatherData2.data.current_observation.display_location.full,
+          weather1: weatherData1.data.current_observation.weather,
+          weather2: weatherData2.data.current_observation.weather,
+          windDir1: weatherData2.data.current_observation.wind_dir,
+          windDir2: weatherData2.data.current_observation.wind_dir,
+          icon1: weatherData2.data.current_observation.icon_url,
+          icon2: weatherData2.data.current_observation.icon_url,
+          hourly1: hourly1.data.hourly_forecast,
+          hourly2: hourly2.data.hourly_forecast
+        }
       }
-      console.log('DISPATCHER', hourly1)
       return dispatch(gotCurrTemp(currData))
     })
     .catch(err => console.error(err))

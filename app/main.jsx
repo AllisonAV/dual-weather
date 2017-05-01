@@ -7,13 +7,14 @@ import {connect, Provider} from 'react-redux'
 import store from './store'
 
 import AppContainer from './containers/AppContainer'
-import { Container } from './containers/Container'
 
 import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
+
 import WeatherContainer from './containers/WeatherContainer'
+import MapGoogleContainer from './containers/MapGoogleContainer'
 import WeatherLocationContainer from './containers/WeatherLocationContainer'
 
 const ExampleApp = connect(
@@ -42,7 +43,7 @@ render(
         <Route path="/weather/:location1/:location2"
                 component={WeatherLocationContainer}
                 onEnter={onWeatherLocationEnter} />
-        <Route path="/map" component={Container} />
+        <Route path="/map" component={MapGoogleContainer} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

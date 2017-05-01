@@ -11,8 +11,8 @@ const Navbar = (props) =>
     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <Link to="/" className="navbar-brand">Home</Link>
         <ul className="nav navbar-nav">
-          <li><Link to="/map" activeClassName="active-link">Use Map</Link></li>
-          <li><Link to="/routes" activeClassName="active-link">Select Routes</Link></li>
+          <li><Link to="/map" activeClassName="active-link">Map</Link></li>
+          <li><Link to="/routes" activeClassName="active-link">Create Routes</Link></li>
           <li><Link to="/routes/:id" activeClassName="active-link">Your Routes</Link></li>
         </ul>
     </div>

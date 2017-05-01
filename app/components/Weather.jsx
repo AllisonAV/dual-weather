@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
 
+import store from '../store'
+
 export default class Weather extends Component {
   constructor(props) {
     super(props)
@@ -38,24 +40,33 @@ export default class Weather extends Component {
     } else if (this.state.locations.city1 && this.state.locations.state1) {
       this.removeSpacesFromCity(this.state.locations.state1)
       param1 = `${this.state.locations.city1}_${this.state.locations.state1}`
-    } else if (this.state.locations.city1 && !this.state.locations.state1) {
+    } else if ((this.state.locations.city1 && !this.state.locations.state1) ||
+               (this.state.locations.state1 && !this.state.locations.city1)) {
       validCityState = false
-    } else validData = false
+    } else {
+      validData = false
+    }
 
     if (this.state.locations.zip2) {
       param2 = this.state.locations.zip2
     } else if (this.state.locations.city2 && this.state.locations.state2) {
       this.removeSpacesFromCity(this.state.locations.state1)
       param2 = `${this.state.locations.city2}_${this.state.locations.state2}`
-    } else if (this.state.locations.city2 && !this.state.locations.state2) {
+    } else if ((this.state.locations.city2 && !this.state.locations.state2) ||
+              (this.state.locations.state2 && !this.state.locations.city2)) {
       validCityState = false
-    } else validData = false
+    } else {
+      validData = false
+    }
 
     if (validData && validCityState) {
       this.setState({error: false})
       this.setState({errorCityState: false})
       this.props.getCurrTemp(param1, param2)
-      .then(() => browserHistory.push(`/weather/${param1}/${param2}`))
+      .then(() => {
+        store.getState()
+        browserHistory.push(`/weather/${param1}/${param2}`)
+      })
     } else if (!validData) {
       this.setState({error: true})
       this.setState({errorCityState: false})
@@ -76,7 +87,7 @@ export default class Weather extends Component {
     return (
       <div>
         <form id='location' className="form-horizontal">
-        <h1>Welcome to my dual weather site!! </h1>
+        <h1>Weather Routes </h1>
           <fieldset>
             <legend>First Location</legend>
             <div className="form-group well">

@@ -1,15 +1,14 @@
 import { connect } from 'react-redux'
-import WeatherLocation from 'APP/app/components/WeatherLocation'
+import MapGoogle from '../components/MapGoogle'
 import { getCurrTemp } from '../reducers/weather'
-import store from '../store'
 
 // map State To Props takes what is already on State
 const mapStateToProps = (state) => {
   return {
-    currData: state.weather.currData,
-    celsius: false
+    currData: state.weather.currData
   }
 }
+
 // Whatever function I put here, to update the state, I need to
 // make sure the returned value of the state is above in
 // map State To Props
@@ -19,4 +18,4 @@ const mapDispatchToProps = { getCurrTemp }
 // which triggers the reducer
 // which changes the state
 
-export default connect(mapStateToProps, null)(WeatherLocation)
+export default connect(mapStateToProps, mapDispatchToProps)(MapGoogle)
