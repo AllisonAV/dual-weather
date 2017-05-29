@@ -1,21 +1,25 @@
 dual-weather,  to be renamed weather-routes
 
-Have you ever need to see weather in multiple locations at once?
+Created by Allison Alexander
 
-Weather-Routes is a place where you can enter in two locations and see side by side weather comparisons on the same screen
+<h3>Technologies</h3>
+This application was created using React and React-Redux, along with APIs from Weather Underground and Google Maps.
+
+
+<h3>Current Functionality</h3>
+
+Have you ever need to see weather in multiple locations at once?
+Weather Routes is a useful application that displays the weather for two locations at once.  
+
+Entering locations is easy and can be done in two ways
+* Enter zipcode or city and state on the main page
+* Pick two locations on google maps
+
 
 Weather-Routes will be deployed in the near future, after issues with too many hits per minute using the key are resolved.
 
-Created by Allison Alexander.
 
-Powered by React.js and React-Redux
-
-Current functionality
-
-Displays weather for 2 locations after user enters in either zip or city and state
-Displays weather for 2 locations that user selects on google maps.
-
-Future features
+<h3>Future features</h3>
 
 Add a feature to add multiple locations in a route.  This could be useful to see the weather on bike routes, or multiple beach towns on the same screen.
 Connect to Firebase, and the ability for users to login and save the routes that they have created.
