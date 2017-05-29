@@ -1,6 +1,7 @@
-dual-weather,  to be renamed weather-routes
+<h3>dual-weather</h3>
+To be renamed weather-routes
 
-Created by Allison Alexander
+<h3>Created by Allison Alexander</h3?
 
 <h3>Technologies</h3>
 This application was created using React and React-Redux, along with APIs from Weather Underground and Google Maps.
